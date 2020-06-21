@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+    integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+    integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+    crossorigin="anonymous"></script>
+</head>
+
+<body onload="<%= thankyou || false %> && document.getElementById('showModal').click()">
+  <div class="container-fluid bg-light">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="jumbotron text-center">
+          <h1>Please login or signup:</h1>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-md-center">
+      <div class="col-sm-6">
+        <form method="post">
+          <div class="form-group">
+            <div class="alert alert-danger alert-dismissible<%= !incorrect && ' collapse' %>" role="alert">
+              <strong>Error:</strong> Wrong username or password!
+            </div>
+            <div class="alert alert-danger alert-dismissible<%= !alreadytaken && ' collapse' %>" role="alert">
+              <strong>Error:</strong> The username <strong><%= username %></strong> is already taken!
+            </div>
+            <div class="input-group mb-1">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Username</span>
+              </div>
+              <input id="text Username" type="text" class="form-control" name="username" autocomplete="username"
+                value="<%= username || '' %>" pattern="\w+" maxlength="30"><!-- maxlength because of paypal invoice_id maxlength -->
+            </div>
+            <div class="input-group mb-1">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Password</span>
+              </div>
+              <input id="password Password" type="password" class="form-control" name="password"
+                autocomplete="current-password" pattern="[^:`]+" maxlength="30"><!-- maxlength because of paypal invoice_id maxlength -->
+            </div>
+            <div class="input-group mb-1">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Email</span>
+              </div>
+              <input id="email Email" type="email" class="form-control" name="email" placeholder="(if signing up)"
+                maxlength="30"><!-- maxlength because of paypal invoice_id maxlength -->
+            </div>
+            <div class="btn-group d-flex mb-1" role="group">
+              <button id="button Login" type="submit" class="btn btn-secondary w-100" formaction="/login">Login</button>
+              <button id="button Signup" type="submit" class="btn btn-secondary w-100"
+                formaction="/signup">Signup</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <button id="showModal" type="button" class="btn btn-primary collapse" data-toggle="modal"
+    data-target="#exampleModalCenter"></button>
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Purchase Confirmation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Thank you for purchasing the account named <strong><%= username %></strong>. Please allow us a couple of minutes to setup your account before attempting to login.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
