@@ -23,9 +23,10 @@ function encrypt(text) {
 }
 
 function decrypt(text) {
-  console.log('decrypting: ', text);
   const textParts = text.split(':').map(part => en.decode(part, 16));
-  const iv = Buffer.from(textParts.shift(), 'hex');
+  let iv = textParts.shift();
+  iv = iv.padStart(32, '0'); // pad if not the correct length
+  iv = Buffer.from(iv, 'hex');
   const encryptedText = Buffer.from(textParts.join(':'), 'hex');
   const decipher = crypto.createDecipheriv(algorithm, Buffer.from(ENCRYPTION_KEY, 'hex'), iv);
   let decrypted = decipher.update(encryptedText);
